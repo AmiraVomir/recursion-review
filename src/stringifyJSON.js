@@ -6,21 +6,34 @@
 var stringifyJSON = function(obj) {
   // your code goes here
   // primitive data types
-  let stringify = '';
-  if (typeof obj === 'number' || typeof obj === 'boolean' || typeof obj === 'null') {
-    return stringify += obj;
-  }
   if (typeof obj === 'string') {
     return '"' + obj + '"';
   }
 
-
-
   // arrays
-
+  // if (Array.isArray(obj)) {
+  //   let result = [];
+  //   if (!obj.length) {
+  //     return '[]';
+  //   } else {
+  //     // loop thru array
+  //     for (var i = 0; i < obj.length; i++) {
+  //       result.push(stringifyJSON(obj[i]));
+  //     }
+  //     return '[' + result + ']';
+  //   }
+  // }
+  if (Array.isArray(obj)) {
+    var empArr = [];
+    obj.forEach(element => {empArr.push(stringifyJSON(element));
+    });
+    return  "" + '[' + empArr.join(',') + ']';
+  }
 
 
 
   // objects
 
+  //return
+  return '' + obj;
 };
