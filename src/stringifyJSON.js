@@ -5,4 +5,22 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
+  // primitive data types
+  let stringify = '';
+  if (typeof obj === 'number' || typeof obj === 'boolean' || typeof obj === 'null') {
+    return stringify += obj;
+  }
+  if (typeof obj === 'string') {
+    return '"' + obj + '"';
+  }
+
+
+
+  // arrays
+
+
+
+
+  // objects
+
 };
