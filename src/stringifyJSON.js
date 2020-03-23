@@ -23,17 +23,47 @@ var stringifyJSON = function(obj) {
   //     return '[' + result + ']';
   //   }
   // }
+  var empArr = [];
   if (Array.isArray(obj)) {
-    var empArr = [];
     obj.forEach(element => {empArr.push(stringifyJSON(element));
     });
-    return  "" + '[' + empArr.join(',') + ']';
+    return '[' + empArr + ']';
   }
 
-
-
   // objects
+  if (typeof obj === 'object') {
+    // get the objects keys
+    let objKeys = Object.keys(obj);
+    // if the obj is empty
+    if (!objKeys.length) {
+      //return empty {}
+      return '{}';
+    } else {
+      // loop through the keys
+      for (let key in obj) {
+        // get the current key's value
+        let value = obj[key];
+        // edge case for functions
+        if (typeof value === 'function') {
+          return '{}';
+        }
+        // recursively build the key and value strings
+        let keyStr = stringifyJSON(key);
+        let valueStr = stringifyJSON(obj[key]);
+        // push the strings into empArr
+        empArr.push(keyStr + ':' + valueStr)
+        if (keyStr === Object.keys(obj).pop()) {
+          break;
+        } else {
+          empArr.push(',');
+        }
+      }
+    }
+    // create a string variable
+    let resultStr = empArr.join('');
+    return '{' + resultStr + '}';
 
-  //return
+  }
+  // return
   return '' + obj;
 };
