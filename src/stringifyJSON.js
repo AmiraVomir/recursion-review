@@ -5,63 +5,45 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
+  var empStr = '';
+
   // primitive data types
   if (typeof obj === 'string') {
     return '"' + obj + '"';
   }
 
-  // arrays
-  // if (Array.isArray(obj)) {
-  //   let result = [];
-  //   if (!obj.length) {
-  //     return '[]';
-  //   } else {
-  //     // loop thru array
-  //     for (var i = 0; i < obj.length; i++) {
-  //       result.push(stringifyJSON(obj[i]));
-  //     }
-  //     return '[' + result + ']';
-  //   }
-  // }
-  var empArr = [];
+  // check for null
+  if (obj === null) {
+    return 'null';
+  }
+  //array
   if (Array.isArray(obj)) {
-    obj.forEach(element => {empArr.push(stringifyJSON(element));
+    var empty = [];
+    obj.forEach(element => {empty.push(stringifyJSON(element));
     });
-    return '[' + empArr + ']';
+    return '[' + empty.join(',') + ']';
   }
 
   // objects
   if (typeof obj === 'object') {
-    // get the objects keys
-    let objKeys = Object.keys(obj);
-    // if the obj is empty
-    if (!objKeys.length) {
-      //return empty {}
-      return '{}';
-    } else {
       // loop through the keys
-      for (let key in obj) {
-        // get the current key's value
-        let value = obj[key];
-        // edge case for functions
-        if (typeof value === 'function') {
-          return '{}';
-        }
-        // recursively build the key and value strings
-        let keyStr = stringifyJSON(key);
-        let valueStr = stringifyJSON(obj[key]);
-        // push the strings into empArr
-        empArr.push(keyStr + ':' + valueStr)
-        if (keyStr === Object.keys(obj).pop()) {
-          break;
-        } else {
-          empArr.push(',');
-        }
+    for (let key in obj) {
+      // get the current key's value
+      let value = obj[key];
+      // edge case for functions
+      if (typeof value === 'function') {
+        return '{}';
+      }
+      // push the strings into empStr
+      empStr += (stringifyJSON(key) + ':' + stringifyJSON(value));
+      if (key === Object.keys(obj).pop()) {
+        break;
+      } else {
+        empStr += ',';
       }
     }
-    // create a string variable
-    let resultStr = empArr.join('');
-    return '{' + resultStr + '}';
+
+    return '{' + empStr + '}';
 
   }
   // return
