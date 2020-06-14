@@ -29,6 +29,7 @@ npm start
 
 * [node.js](https://nodejs.org/en/)
 * [mocha](https://mochajs.org/)
+* [chai](https://www.chaijs.com/)
 
 ## Authors
 
